@@ -1,0 +1,17 @@
+Tester Library v.3.0
+-----------------------------------
+Tests defined in the class: DesignRecipeExamples:
+---------------------------
+DesignRecipeExamples:
+---------------
+new DesignRecipeExamples:1(
+ this.perimeterTest1 = 16
+ this.perimeterTest2 = 32
+ this.borderAreaTest1 = 21
+ this.borderAreaTest2 = 75
+ this.usdToHkdTest1 = 10
+ this.usdToHkdTest2 = 101
+ this.totalCentimetersTest1 = 510
+ this.totalCentimetersTest2 = 300)
+---------------
+No test methods found.
