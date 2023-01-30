@@ -8,7 +8,7 @@ class Open1B {
 }
 
 /* The program produces an error:
- * Open1B.java:3: error: variable field1 is already defined in class StatementB
+ Open1B.java:3: error: variable field1 is already defined in class StatementB
     boolean field1 = true;
             ^
 1 error

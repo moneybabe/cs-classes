@@ -12,7 +12,7 @@ class Open1A {
     int field1Diff = instance1.field1 - instance2.field1;
 }
 
-/* It's completely fine to have two different classes having a field with thre same name and type
+/* It's completely fine to have two different classes having a field with the same name and type
  * The above program showed a subtraction between field1 from two diff classes
  */
 
