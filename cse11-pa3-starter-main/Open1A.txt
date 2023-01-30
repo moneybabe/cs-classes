@@ -1,0 +1,14 @@
+Tester Library v.3.0
+-----------------------------------
+Tests defined in the class: Open1A:
+---------------------------
+Open1A:
+---------------
+new Open1A:1(
+ this.instance1 = new StatementAClass1:2(
+  this.field1 = 0)
+ this.instance2 = new StatementAClass2:3(
+  this.field1 = 2)
+ this.field1Diff = -2)
+---------------
+No test methods found.

@@ -1,0 +1,12 @@
+Tester Library v.3.0
+-----------------------------------
+Tests defined in the class: Open1C:
+---------------------------
+Open1C:
+---------------
+new Open1C:1(
+ this.instance = new StatementC:2()
+ this.r1 = 9
+ this.r2 = 4)
+---------------
+No test methods found.
