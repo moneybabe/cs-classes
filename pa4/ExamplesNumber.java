@@ -120,5 +120,6 @@ class ExamplesNumber {
     // Exploration
     double ex1 = 0.1 + 0.2 + 0.3;
     double ex2 = 0.1 + (0.2 + 0.3);
-    String ex3 = (new Fraction(1,10)).add((new Fraction(2, 10)).add(new Fraction(3, 10))).toString();
+    String ex3 = (new Fraction(1,10)).add(new Fraction(2, 10)).add(new Fraction(3, 10)).toString();
+    String ex4 = (new Fraction(1,10)).add((new Fraction(2, 10)).add(new Fraction(3, 10))).toString();
 }
