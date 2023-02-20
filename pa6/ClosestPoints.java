@@ -17,7 +17,7 @@ class Point {
     }
 }  
 
-class ClosetPoints {
+class ClosestPoints {
     public static void main(String[] args) {
 
         int[] coordinateArr = new int[args.length];
