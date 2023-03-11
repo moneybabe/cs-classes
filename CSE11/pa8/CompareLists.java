@@ -65,14 +65,6 @@ class BooleanCompare implements Comparator<Boolean> {
 
 
 
-
-
-
-
-
-
-
-
 class CompareLists {
 
   <E> E minimum(List<E> list, Comparator<E> comp) {
@@ -115,6 +107,10 @@ class CompareLists {
     return true;
   }
 
+  // call to raise exception
+  // Comparator<String> strLenComp = new StringLengthCompare();
+  // boolean exceptionCall = this.inOrder(new ArrayList<String>(Arrays.asList("1","2","",null)), this.strLenComp);
+
   <E> boolean inOrder(E[] arr, Comparator<E> comp) {
     if (arr.length == 0) return true;
     if (Arrays.asList(arr).contains(null)) throw new IllegalArgumentException("null value in list");
@@ -127,27 +123,71 @@ class CompareLists {
     return true;
   }
 
-  <E> List<E> merge(List<E> list1, List<E> list2, Comparator<E> comp) {
+  // this is an awful implementation of the merge function, I just wanna try writing recursive function 
+  // static <E> List<E> recursiveCompare(E element, List<E> addList, List<E> list, Comparator<E> comp) {
+  //   // base case
+  //   if (comp.compare(element, list.get(0)) < 0) { // end when the element is smaller
+  //     addList.add(element);
+  //     return addList;
+  //   } else if (comp.compare(element, list.get(0)) >= 0 && list.size() == 1) { // end when list is exhausted
+  //     addList.add(list.get(0));
+  //     addList.add(element);
+  //     return addList;
+  //   }
+
+  //   addList.add(list.get(0));
+  //   return recursiveCompare(element, addList, list.subList(1, list.size()), comp);
+
+  // }
+
+  // <E> List<E> merge(List<E> list1, List<E> list2, Comparator<E> comp) {
+  //   if (list1.contains(null)) throw new  IllegalArgumentException("null value in first list");
+  //   if (list2.contains(null)) throw new  IllegalArgumentException("null value in second list");
+
+  //   int index = 0;
+  //   List<E> returnList = new ArrayList<E>();
+  //   for (int i = 0; i <= list1.size(); i++) {
+  //     if (index == list2.size()) {  // list2 is exhausted
+  //       if (i == list1.size()) {  // both list1 and list2 are exhausted
+  //         break;
+  //       }
+
+  //       returnList.add(list1.get(i));
+  //       continue; 
+  //       }
+  //     else if (i == list1.size() && index != list2.size()) { returnList.addAll(list2.subList(index, list2.size())); break;};  // list1 is exhausted
+
+  //     List<E> addList = recursiveCompare(list1.get(i), new ArrayList<E>(), list2.subList(index, list2.size()), comp);
+  //     returnList.addAll(addList);
+  //     index += addList.size()-1;
+  //   }
+    
+  //   return returnList;
+  // }
+
+  <E> List<E> merge(Comparator<E> comp, List<E> list1, List<E> list2) {
     if (list1.contains(null)) throw new  IllegalArgumentException("null value in first list");
     if (list2.contains(null)) throw new  IllegalArgumentException("null value in second list");
 
-    return list1;
+    List<E> returnList = new ArrayList<>();
+    int list2Index = 0;
+    for (int i = 0; i < list1.size(); i++) {
+      if (list2Index == list2.size()) { returnList.add(list1.get(i)); continue;};
+      
+      while (comp.compare(list1.get(i), list2.get(list2Index)) >= 0) {
+        returnList.add(list2.get(list2Index));
+        list2Index += 1;
+        if (list2Index == list2.size()) break;
+      }
+      returnList.add(list1.get(i));
+    }
 
+    if (list2Index != list2.size()) returnList.addAll(list2.subList(list2Index, list2.size()));
+
+    return returnList;
   }
 
 
-
-
-
-
-
-
-
-
-
-
-
-  
   
   // test cases for comparators
   Comparator<Point> pointComp = new PointCompare();
@@ -204,20 +244,6 @@ class CompareLists {
 
   
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   // test cases for list methods
   List<String> list1 = new ArrayList<>(Arrays.asList("gm", "hi", "hello", "good morning", "halo", "bonjour", "hola"));
   List<Point> list2 = new ArrayList<>(Arrays.asList(this.pt1, this.pt2, this.pt3, this.pt4));
@@ -265,7 +291,22 @@ class CompareLists {
     t.checkException(new IllegalArgumentException("null value in list"), this, "inOrder", this.arr4, this.pointComp);
   }
 
-  // void testMerge(Tester t) {
-  //   t.checkExpect(this.merge(null, null, null), null)
+  List<String> list8 = new ArrayList<>(Arrays.asList("1","1","12","123","123"));
+  List<String> list9 = new ArrayList<>(Arrays.asList("1","12","11","11","1111"));
+  List<String> list10 = new ArrayList<>(Arrays.asList("1","12","11","23"));
+  void testMerge(Tester t) {
+    t.checkExpect(this.merge(this.strLenComp, this.list8, this.list9), new ArrayList<String>(Arrays.asList("1","1","1","12","11","11","12","123","123","1111")));
+    t.checkExpect(this.merge(this.strLenComp, this.list8, this.list10), new ArrayList<String>(Arrays.asList("1","1","1","12","11","23","12","123","123")));
+    t.checkExpect(this.merge(this.strLenComp, this.list10, this.list8), new ArrayList<String>(Arrays.asList("1","1","1","12","12","11","23","123","123")));
+    t.checkExpect(this.merge(this.strLenComp, this.list10, this.list10), new ArrayList<String>(Arrays.asList("1","1","12","11","23","12","11","23")));
+    t.checkExpect(this.merge(this.strComp, this.list8, this.list8), new ArrayList<String>(Arrays.asList("1","1","1","1","12","12","123","123","123","123")));
+    t.checkExpect(this.merge(this.strLenComp, this.list9, this.list8), new ArrayList<String>(Arrays.asList("1","1","1","12","12","11","11","123","123","1111")));
+    t.checkExpect(this.merge(this.strLenComp, this.list9, this.list10), new ArrayList<String>(Arrays.asList("1","1","12","11","23","12","11","11","1111")));
+  }
+
+  // List<String> list7 = new ArrayList<>(Arrays.asList("gm", "hi", "hola", "halo", "hello", "good morning", "halo", "bonjour", "hola"));
+  // void testRecursiveCompare(Tester t) {
+  //   t.checkExpect(recursiveCompare("12", new ArrayList<String>(), this.list1, this.strLenComp), new ArrayList<String>(Arrays.asList("gm", "hi", "12")));
+  //   t.checkExpect(recursiveCompare("12345", new ArrayList<String>(), this.list7, this.strLenComp), new ArrayList<String>(Arrays.asList("gm", "hi", "hola", "halo", "hello", "12345")));
   // }
 }
