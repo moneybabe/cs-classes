@@ -1,0 +1,21 @@
+Q1
+1. Buggy: After adding 10 [new Item("Shampoo", 5)], it returns 0 after calling countItem(new Item("Shampoo", 5)), which should be expected to return 10.
+2. Buggy: After adding 1001 items and calling count(), it returns only 1000.
+3. Buggy: After adding 10 [new Item("Shampoo", 5)], it returns 0 after calling countItem(new Item("Shampoo", 5)), which should be expected to return 10.
+4. Buggy: IndexOutOfBoundsException after calling empty().
+5. Buggy: After adding 1 [new Item("Shampoo", 0)] and 2001 other items with different prices, and calling removeAllFromBasket([new Item("Shampoo", 0)]), it returns 2000 after calling count() instead of 2001.
+6. Implementation choice: After adding 2002 items and 1 null, it returns 2003 when calling count() instead of 2002.
+7. Implementation choice: After adding 2002 items and 1 null, it returns 2003 when calling count() instead of 2002.
+8. Buggy: After adding 1 [new Item("Shampoo", 0)] and 10 [new Item("Shampoo", 5)], it returns 0 when calling countItem(new Item("Shampoo", 0)) instead of 1.
+9. Buggy: After adding 1 [new Item("Shampoo", 0)] and 10 [new Item("Shampoo", 5)], it returns 0 when calling countItem(new Item("Shampoo", 0)) instead of 1.
+10. Buggy: After adding 10 [new Item("Shampoo"), 5], it returns 95 when calling totalCost() instead of 50.
+11. Buggy: After adding 10 [new Item("Shampoo"), 5], it returns 5 when calling totalCost() instead of 50.
+12. Buggy: After adding 1 [new Item("Shampoo", 0)] and 10 [new Item("Shampoo", 5)], it returns 0 when calling countItem(new Item("Shampoo", 0)) instead of 1.
+
+Q2: Basket3, Basket10, Basket11. Note: let a = [new Item("Shampoo", 0)] and b = [new Item("Shampoo", 5)] for the following elaboration.
+After adding 1 a and 10 b, they all return different values when calling totalCost().
+Basket3 returns 55, Basket10 returns 95, and Basket11 returns 5, while the correct return should be 50.
+
+Basket3 implementation: Its totalCost() implementation is errorneous. Its totalCost() loop through all the items (let n items) stored in an items ArrayList, but instead of adding up all the prices of each item, it adds up the price of the item at index 1 n times. After adding 1 a and 10 b, items = [a, b, b, b, b, b, b, b, b, b, b. ]Hence, it returns b.price * 11 = 5 * 11 = 55.
+Basket10 implementation: Its totalCost() is errorneous because its addToBasket() is errorneous. It implements the baskets with two ArrayLists: 1) items, 2) counts. The counts ArrayList is supposed to keep track of the count of a specific item, say items = [a, b, c]; counts = [10, 5, 2] means there are 10 a, 5 b, and 2 c. When addToBasket(a) is called, only the counts should be updated to [11, 5, 2]. However, the implementation turns out to not only update the counts ArrayList, but at the same time appends the new item to the items ArrayList and appends 1 to the counts ArrayList. Therefore, after adding 1 a and 10 b, items = [a, b, b, b, b, b, b, b, b, b, b]; counts = [1, 10, 1, 1, 1, 1, 1, 1, 1, 1, 1]. Then, when totalCost() is called, it sums up each of the the item's price in the items ArrayList times the corresponding counts in counts ArrayList, giving b.price * 10 + b.price * 1 + ... + b.price * 1 = 5 * 10 + 5 * 9 = 95.
+Basket11 implementation: Similar to Basket10, it keeps track of the items with two ArrayLists: 1) items, 2) counts. However, its totalCost() implementation is errorneous, specifically, it only loops through the items in items ArrayList and sums up their prices without multiplying them with their corresponding counts. After adding 1 a and 10 b, items = [a, b]; counts = [1, 10]. When calling totalCost(), it returns a.price + b.price = 0 + 5 = 5.

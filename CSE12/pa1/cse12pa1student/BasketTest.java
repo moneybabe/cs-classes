@@ -110,6 +110,7 @@ public class BasketTest {
 		Basket basketToTest = makeBasket();
 
 		basketToTest.addToBasket(new Item("Shampoo", 0));
+		assertEquals(1, basketToTest.count());
 
 		for (int i = 0; i < 1000; i++) {
 			Item item = new Item("Shampoo", 5);
