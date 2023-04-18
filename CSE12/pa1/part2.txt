@@ -4,8 +4,8 @@ Q1
 3. Buggy: After adding 10 [new Item("Shampoo", 5)], it returns 0 after calling countItem(new Item("Shampoo", 5)), which should be expected to return 10.
 4. Buggy: IndexOutOfBoundsException after calling empty().
 5. Buggy: After adding 1 [new Item("Shampoo", 0)] and 2001 other items with different prices, and calling removeAllFromBasket([new Item("Shampoo", 0)]), it returns 2000 after calling count() instead of 2001.
-6. Implementation choice: After adding 2002 items and 1 null, it returns 2003 when calling count() instead of 2002.
-7. Implementation choice: After adding 2002 items and 1 null, it returns 2003 when calling count() instead of 2002.
+6. Implementation choice: After adding 2002 items and 1 null, it returns 2003 when calling count() instead of 2002. The implementation decides to add null into basket too, which is okay in my opinion.
+7. Implementation choice: After adding 2002 items and 1 null, it returns 2003 when calling count() instead of 2002. The implementation decides to add null into basket too, which is okay in my opinion.
 8. Buggy: After adding 1 [new Item("Shampoo", 0)] and 10 [new Item("Shampoo", 5)], it returns 0 when calling countItem(new Item("Shampoo", 0)) instead of 1.
 9. Buggy: After adding 1 [new Item("Shampoo", 0)] and 10 [new Item("Shampoo", 5)], it returns 0 when calling countItem(new Item("Shampoo", 0)) instead of 1.
 10. Buggy: After adding 10 [new Item("Shampoo"), 5], it returns 95 when calling totalCost() instead of 50.

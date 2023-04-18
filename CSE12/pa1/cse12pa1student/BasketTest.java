@@ -224,4 +224,28 @@ public class BasketTest {
 		basketToTest.empty();
 		assertEquals(0, basketToTest.count());
 	}	
+
+	@Test
+	public void testCountNull(){
+		Basket basketToTest = makeBasket();
+		basketToTest.addToBasket(null);
+		assertEquals(0, basketToTest.countItem(null));
+	}
+
+	@Test
+	public void testReturnRemoveAll() {
+		Basket basketToTest = makeBasket();
+		basketToTest.addToBasket(new Item("Shampoo", 0));
+		boolean result = basketToTest.removeAllFromBasket(new Item("Shampoo", 0));
+		assertTrue(result);
+	}
+
+	@Test
+	public void testRemoveNull() {
+		Basket basketToTest = makeBasket();
+		basketToTest.addToBasket(null);
+		boolean result = basketToTest.removeFromBasket(null);
+		assertFalse(result);
+	}
+
 }
