@@ -128,3 +128,7 @@ technical/government/Post_Rate_Comm
 technical/911report
 ```
 - It is finding all directories and files that has size under 1000 bytes and the path name not starting with "pmed". It is useful when you want to do negation of some conditions. It also shows that multiple flags can be used together to make a chain of conditions. So if you want to perform an operation with multiple steps, you can chain it all in one command without separating into multiple commands.
+
+## Sources
+- I find all the command usage by simply asking Bing. I asked for the **most common** usage of using `find`. By directly asking Bing, I can efficiently learn the most commonly used commands because it already aggregated most of the internet information for me. This way, I wouldn't need to look into documentation and bunch of random variations that I would only use very occasionally.
+![Image](images/sources/bing.png)
