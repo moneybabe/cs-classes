@@ -13,9 +13,9 @@ After installing, you can pull up your terminal and type `$ code`, which will di
 2. Set up your password for the account and wait for ~10 minutes.
 3. Go to your terminal and try connecting to the remote server with the termina command `$ ssh cs15lsp23zz@ieng6.ucsd.edu` [replace `cs15lsp23zz` with your username].
 4. Enter your password when prompted, like the following picture 
-> ![pw_prompt](pw_prompt_screenshot.png)
+> ![pw_prompt](images/pw_prompt_screenshot.png)
 5. Done, and you will see something like this!
-> ![server_connected](server_connected.png)
+> ![server_connected](images/server_connected.png)
 
 ### Trying Some Command
 ---
@@ -25,5 +25,5 @@ CONFLICT
 
 
 
-[3]: vscode.png
-[4]: commands.png
+[3]: images/vscode.png
+[4]: images/commands.png
