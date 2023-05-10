@@ -42,6 +42,7 @@ technical/plos/pmed.0020235.txt
 - It is finding all directories and files with path containing "2023", which can be either in the beginning, end, or middle of the path pattern. It is useful because now instead of just finding files that starts or ends with a specific pattern, the pattern can appear anywhere within the path.
 
 ## Using `-size` flag
+**First Example:**
 ```
 neo@Neos-MacBook-Air docsearch-main % find technical -size +200k
 ```
@@ -57,6 +58,7 @@ technical/911report/chapter-3.txt
 ```
 - It is finding all directories and files that have size more than 200 kilobytes. It is usefule when you are trying to figure out what files are taking up so much space in your storage. You can filter them out in this way.
 
+**Second Example:**
 ```
 neo@Neos-MacBook-Air docsearch-main % find technical -size -200c
 ```
@@ -66,6 +68,7 @@ technical/government/Alcohol_Problems
 - It is finding all directories and files that have size lower than 200 bytes. It is useful when you completely forget the name of some files, but you know it's a decently small file, then you can narrow the scope by filtering out the bigger files.
 
 ## Using `-type` flag
+**First Example:**
 ```
 neo@Neos-MacBook-Air docsearch-main % find technical/government -type d
 ```
@@ -80,6 +83,7 @@ technical/government/Media
 ```
 - It is finding only directories inside the government directory. It is useful when you only want to find directories, and don't care about files.
 
+**Second Example:**
 ```
 neo@Neos-MacBook-Air docsearch-main % find technical/government -type f
 ```
@@ -95,6 +99,7 @@ technical/government/About_LSC/Special_report_to_congress.txt
 - It is finding only files inside the government directory. It is useful when you only want to find files, and don't want the unecessary directories path to overwhelm your terminal.
 
 ## Using `-not` flag
+**First Example:**
 ```
 neo@Neos-MacBook-Air docsearch-main % find technical -not -name "*.txt"
 ```
@@ -115,6 +120,7 @@ technical/911report
 ```
 - It is finding all directories and files with path name that doesn't end with ".txt" extension. It is useful when you want to do negation of some conditions.
 
+**Second Example:**
 ```
 neo@Neos-MacBook-Air docsearch-main % find technical -size -1000c -not -name "pmed*"
 ```
