@@ -1,0 +1,3 @@
+[submodule "CSE15L/lr4/list-examples-grader"]
+	path = CSE15L/lr4/list-examples-grader
+	url = git@github.com:leftPathGoat/list-examples-grader.git
