@@ -1,24 +1,28 @@
+/**
+ * @author Neo Lee, yl003@ucsd.edu
+ * This file contains the test cases for BST.java,
+ * all inside the class BSTTest.
+ */
+
 import static org.junit.Assert.*;
 import java.util.List;
 import java.util.Random;
 
 import org.junit.*;
 
+/**
+ * This class contains unit tests for BST.java.
+ */
 public class BSTTest {
 
 	BST<String, Integer> generateBST(int n) {
 		BST<String, Integer> tree = new BST<String, Integer>();
 		Random rand = new Random();
 		for (int i = 0; i < n; i++) {
-			tree.set(Character.toString((char)(rand.nextInt(26) + 65)), rand.nextInt(1000));
+			tree.set(Character.toString((char)(rand.nextInt(26) + 65)), 
+												rand.nextInt(1000));
 		}
 		return tree;
-	}
-	
-	/* TODO: Add your own tests */
-	@Test
-	public void dummyTest() {
-		
 	}
 
 	@Test 

@@ -1,5 +1,8 @@
 /**
+ * @author Neo Lee, yl003@ucsd.edu
  * This file contains an implementation of a binary search tree in class BST.
+ * The class implements the DefaultMap interface written by 
+ * @author Juan Dominguez and @author Qiyue Wang.
  */
 import java.util.ArrayList;
 import java.util.List;
@@ -11,11 +14,6 @@ import java.util.List;
  * @param <V> The type of the values of this BST. 
  */
 public class BST<K extends Comparable<? super K>, V> implements DefaultMap<K, V> {
-	/* 
-	 * You may add any instance variables you need, but 
-	 * you may NOT use any class that implements java.util.SortedMap
-	 * or any other implementation of a binary search tree
-	 */
 
 	private Node<K, V> root;
 	private int size;
@@ -47,6 +45,13 @@ public class BST<K extends Comparable<? super K>, V> implements DefaultMap<K, V>
 		return traverseLeft(node.getLeft());
 	}
 
+	/**
+	 * Adds the specified key, value pair to this DefaultMap
+	 * Note: duplicate keys are not allowed
+	 * 
+	 * @return true if the key value pair was added to this DefaultMap
+	 * @throws IllegalArgumentException if the key is null
+	 */
 	@Override
 	public boolean put(K key, V value) throws IllegalArgumentException {
 		if (key == null) { throw new IllegalArgumentException(ILLEGAL_ARG_NULL_KEY); }
@@ -77,6 +82,13 @@ public class BST<K extends Comparable<? super K>, V> implements DefaultMap<K, V>
 		return true;
 	}
 
+	/**
+	 * Replaces the value that maps to the key if it is present
+	 * @param key The key whose mapped value is being replaced
+	 * @param newValue The value to replace the existing value with
+	 * @return true if the key was in this DefaultMap
+	 * @throws IllegalArgumentException if the key is null
+	 */
 	@Override
 	public boolean replace(K key, V newValue) throws IllegalArgumentException {
 		if (key == null) { throw new IllegalArgumentException(ILLEGAL_ARG_NULL_KEY); }
@@ -93,6 +105,12 @@ public class BST<K extends Comparable<? super K>, V> implements DefaultMap<K, V>
 		return true;
 	}
 
+	/**
+	 * Remove the entry corresponding to the given key
+	 * 
+	 * @return true if an entry for the given key was removed
+	 * @throws IllegalArgumentException if the key is null
+	 */
 	@Override
 	public boolean remove(K key) throws IllegalArgumentException {
 		if (key == null) { throw new IllegalArgumentException(ILLEGAL_ARG_NULL_KEY); }
@@ -188,6 +206,11 @@ public class BST<K extends Comparable<? super K>, V> implements DefaultMap<K, V>
 		}
 	}
 
+	/**
+	 * Adds the key, value pair to this DefaultMap if it is not present,
+	 * otherwise, replaces the value with the given value
+	 * @throws IllegalArgumentException if the key is null
+	 */
 	@Override
 	public void set(K key, V value) throws IllegalArgumentException {
 		if (key == null) { throw new IllegalArgumentException(ILLEGAL_ARG_NULL_KEY); }
@@ -195,6 +218,10 @@ public class BST<K extends Comparable<? super K>, V> implements DefaultMap<K, V>
 		if (!replaced) { put(key, value); }
 	}
 
+	/**
+	 * @return the value corresponding to the specified key
+	 * @throws IllegalArgumentException if the key is null
+	 */
 	@Override
 	public V get(K key) throws IllegalArgumentException {
 		if (key == null) { throw new IllegalArgumentException(ILLEGAL_ARG_NULL_KEY); }
@@ -205,16 +232,28 @@ public class BST<K extends Comparable<? super K>, V> implements DefaultMap<K, V>
 		return node.getValue();
 	}
 
+	/**
+	 * 
+	 * @return The number of (key, value) pairs in this DefaultMap
+	 */
 	@Override
 	public int size() {
 		return this.size;
 	}
 
+	/**
+	 * 
+	 * @return true iff this.size() == 0 is true
+	 */
 	@Override
 	public boolean isEmpty() {
 		return this.size == 0;
 	}
 
+	/**
+	 * @return true if the specified key is in this DefaultMap
+	 * @throws IllegalArgumentException if the key is null
+	 */
 	@Override
 	public boolean containsKey(K key) throws IllegalArgumentException {
 		if (key == null) { throw new IllegalArgumentException(ILLEGAL_ARG_NULL_KEY); }
@@ -236,9 +275,11 @@ public class BST<K extends Comparable<? super K>, V> implements DefaultMap<K, V>
 		inOrderTraverse(node.getRight(), keys);
 	}
 
-	// Keys must be in ascending sorted order
-	// You CANNOT use Collections.sort() or any other sorting implementations
-	// You must do inorder traversal of the tree
+	/**
+	 * 
+	 * @return an array containing the keys of this DefaultMap. If this DefaultMap is 
+	 * empty, returns array of length zero. 
+	 */
 	@Override
 	public List<K> keys() {
 		List<K> keys = new ArrayList<K>();
@@ -246,11 +287,18 @@ public class BST<K extends Comparable<? super K>, V> implements DefaultMap<K, V>
 		return keys;
 	}
 	
+	/**
+	 * This class represents a node in the BST
+	 * Instance variables:
+	 * left: the left child of this node
+	 * right: the right child of this node
+	 * parent: the parent of this node
+	 * key: the key of this node
+	 * value: the value of this node
+	 */
 	private static class Node<K extends Comparable<? super K>, V> 
 								implements DefaultMap.Entry<K, V> {
-		/* 
-
-		 */
+		
 		private Node<K, V> left;
 		private Node<K, V> right;
 		private Node<K, V> parent;
@@ -265,52 +313,89 @@ public class BST<K extends Comparable<? super K>, V> implements DefaultMap<K, V>
 			this.parent = null;
 		}
 
+		/**
+		 * @return the key
+		 */
 		@Override
 		public K getKey() {
-
 			return this.key;
 		}
 
+		/**
+		 * Set the key of this node
+		 * @param key the key to set
+		 */
 		public void setKey(K key) {
 			this.key = key;
 		}
 		
+		/**
+		 * @return the value
+		 */
 		@Override
 		public V getValue() {
 
 			return this.value;
 		}
 
+		/**
+		 * Set the value of this node
+		 * @param value the value to set
+		 */
 		@Override
 		public void setValue(V value) {
 
 			this.value = value;
 		}
 
+		/**
+		 * Set the left child of this node
+		 * @param left the left child to set
+		 */
 		public void setLeft(Node<K, V> left) {
 			this.left = left;
 		}
 
+		/**
+		 * Set the right child of this node
+		 * @param right the right child to set
+		 */
 		public void setRight(Node<K, V> right) {
 			this.right = right;
 		}
 
+		/**
+		 * Set the parent of this node
+		 * @param parent the parent to set
+		 */
 		public void setParent(Node<K, V> parent) {
 			this.parent = parent;
 		}
 
+		/**
+		 * @return the left child
+		 */
 		public Node<K, V> getLeft() {
 			return this.left;
 		}
 
+		/**
+		 * @return the right child
+		 */
 		public Node<K, V> getRight() {
 			return this.right;
 		}
 
+		/**
+		 * @return the parent
+		 */
 		public Node<K, V> getParent() {
 			return this.parent;
 		}
 
+		/**
+		 * @return true iff this node is a leaf
+		 */
 		public boolean isLeaf() {
 			return this.left == null && this.right == null;
 		}

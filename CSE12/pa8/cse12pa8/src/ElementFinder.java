@@ -1,4 +1,5 @@
 /**
+ * @author Neo Lee, yl003@ucsd.edu
  * This file implements a method to find the Kth largest or smallest element in a file.
  */
 import java.io.File;

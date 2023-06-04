@@ -1,7 +1,9 @@
+/**
+ * @author Neo Lee, yl003@ucsd.edu
+ * HeapTest class implements tester that will test the methods from heap file
+ */
 import static org.junit.Assert.assertEquals;
-
 import java.util.Comparator;
-
 import org.junit.Test;
 
 /**

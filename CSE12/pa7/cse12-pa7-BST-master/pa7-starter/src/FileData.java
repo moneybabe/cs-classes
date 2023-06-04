@@ -1,4 +1,5 @@
 /**
+ * @author Neo Lee, yl003@ucsd.edu
  * This file contains a class that represents a file in a file system.
  * It has the following instance variables:
  * name: the name of the file
@@ -18,6 +19,11 @@
         this.lastModifiedDate = modifiedDate;
     }
 
+    /**
+     * Returns the attributes of the file in a string,
+     * including the name, directory, and last modified date
+     * @return the attributes of the file in a string
+     */
     public String toString() {
         return "{Name: " + this.name + ", " +
                 "Directory: " + this.dir + ", " + 

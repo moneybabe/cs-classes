@@ -1,7 +1,15 @@
+/**
+ * @author Neo Lee, yl003@ucsd.edu
+ * This file contains the test cases for FileSystem.java,
+ * all inside the class FileSystemTest.
+ */
 import static org.junit.Assert.*;
 
 import org.junit.*;
 
+/**
+ * This class contains unit tests for FileSystem.java.
+ */
 public class FileSystemTest {
     @Test
     public void testAdd() {

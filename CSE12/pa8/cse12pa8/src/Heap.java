@@ -1,6 +1,6 @@
 /**
+ * @author Neo Lee, yl003@ucsd.edu
  * This file implements a heap data structure with class Entry<K, V> and class Heap<K, V>.
- * 
  */
 import java.util.List;
 import java.util.NoSuchElementException;

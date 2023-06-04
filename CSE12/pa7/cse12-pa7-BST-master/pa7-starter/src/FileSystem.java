@@ -1,4 +1,5 @@
 /**
+ * @author Neo Lee, yl003@ucsd.edu
  * This file contains an implementation of a file system in class FileSystem
  * that stores files in a BST.
  */
@@ -26,10 +27,12 @@ public class FileSystem {
 
     BST<String, FileData> nameTree;
     BST<String, ArrayList<FileData>> dateTree;
+    
     public FileSystem() {
         this.nameTree = new BST<>();
         this.dateTree = new BST<>();
     }
+
     public FileSystem(String inputFile) {
     	// Add your code here
         this.dateTree = new BST<>();
