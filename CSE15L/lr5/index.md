@@ -1,12 +1,15 @@
 ## Part 1 – Debugging Scenario
-### Student A (6:00pm 06/04/2023)
+### 1) Student A (6:00pm 06/04/2023)
 **What environment are you using (computer, operating system, web browser, terminal/editor, and so on)?**
+
 *I am using MacOS with zsh. I use VSCode for my text editor.*
 
 **Detail the symptom you're seeing. Be specific; include both what you're seeing and what you expected to see instead. Screenshots are great, copy-pasted terminal output is also great. Avoid saying “it doesn't work”.**
+
 *I am writing a static method `timesTwo` in the class `Transformer`. The method would take an int array and multiply every element by two then return the new array. However, when I run my unit test, it is not outputting what I expected.*
 
 **Detail the failure-inducing input and context. That might mean any or all of the command you're running, a test case, command-line arguments, working directory, even the last few commands you ran. Do your best to provide as much context as you can.**
+
 *I attached a screenshot of the failed test and all my files. The tests are in `TransformerTest.java` and the implementation is in `Transformer.java`.*
 ![bug.png](images/bug.png)
 *When I run `bash test.sh`, which basically just compiles with JUnit and runs the test, I get the following output:*
@@ -45,7 +48,7 @@ The test is as follows:*
 *, which is basically adding the original array `{1, 2, 3}` with the transformed array `{2, 4, 6}` element-wise, so I am expecteding `{3, 6, 9}`. But the the failed test says the first element of the final array is `4` instead of `3`.*
 
 
-### TA (7:00pm 06/04/2023)
+### 2) TA (7:00pm 06/04/2023)
 *It seems like your `timesTwo` method is altering the input array in-place, which means it completely changes the content of the input array, instead of returning a new array with the transformed elements.*
 
 *Therefore, in your `testTransformAddOriginal` test, after running line 17:*
@@ -54,7 +57,7 @@ int[] result = Transformer.timesTwo(arr);
 ```
 *, `result` and `arr` contain the same content `{2, 4, 6}`, and now when you add `result` and `arr` together element-wise, you would get `{4, 8, 12}` instead of `{3, 6, 9}`. So now it just depends on whether you want your implementation to change the input array in-place or not.*
 
-### Student A (7:30pm 06/04/2024)
+### 3) Student A (7:30pm 06/04/2024)
 *I see. Thank you so much! I have changed my implementation to return a new array instead of doing in-place transform now. It is working completely fine now! (Sorry for replying a year late :p)*
 ![fixed.png](images/fixed.png)
 
