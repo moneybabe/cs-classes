@@ -61,4 +61,4 @@ int[] result = Transformer.timesTwo(arr);
 ## Part 2 – Reflection
 The terminal command line shortcuts are definitely very helpful. Like the `<option> + <left/right key>` to navigate between words and `<control> + w` to delete a word. It definitely helps me navigate through directories faster and less typo (which ALWAYS infuriates me). 
 
-Also vim was pretty cool, it allows me to make minor script to perform small task very quickly, or sometimes I just use it to alter a few lines of code in a file without opening the whole file in VSCode. It definitely streamlined my workflow.
+Also vim was pretty cool, it allows me to make minor script to perform small task very quickly, or sometimes I just use it to alter a few lines of code in a file without opening the whole file in VSCode. It definitely streamlined my workflow!
