@@ -83,24 +83,31 @@ public class Heap<K, V> {
      */
     public int parent(int index) {
         if (index == 0) { throw new NoSuchElementException(); }
+        
+        // literally the math equation for the index position, 
+        // looks like a magic number, but idt assigning a variable name makes it cleaner
         return (index - 1) / 2;
     }
-
+    
     /**
      * It returns the left child index of the given index
      * @param index
      * @return the left child index of the given index
      */
     public int left(int index) {
+        // literally the math equation for the index position, 
+        // looks like a magic number, but idt assigning a variable name makes it cleaner
         return 2 * index + 1;
     }
-
+    
     /**
      * It returns the right child index of the given index
      * @param index
      * @return the right child index of the given index
      */
     public int right(int index) {
+        // literally the math equation for the index position, 
+        // looks like a magic number, but idt assigning a variable name makes it cleaner
         return 2 * index + 2;
     }
 
