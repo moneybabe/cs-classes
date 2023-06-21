@@ -1,3 +1,5 @@
 .DS_Store
 *.class
 .vscode
+.ok*
+__pycache__
