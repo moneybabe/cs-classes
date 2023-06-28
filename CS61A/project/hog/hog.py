@@ -1,3 +1,4 @@
+from typing import Callable, Tuple
 """The Game of Hog."""
 
 from dice import six_sided, make_test_dice
@@ -10,7 +11,7 @@ GOAL = 100  # The goal of Hog is to score 100 points.
 ######################
 
 
-def roll_dice(num_rolls, dice=six_sided):
+def roll_dice(num_rolls: int, dice: Callable[[], int]=six_sided) -> int:
     """Simulate rolling the DICE exactly NUM_ROLLS > 0 times. Return the sum of
     the outcomes unless any of the outcomes is 1. In that case, return 1.
 
@@ -31,7 +32,7 @@ def roll_dice(num_rolls, dice=six_sided):
     # END PROBLEM 1
 
 
-def boar_brawl(player_score, opponent_score):
+def boar_brawl(player_score: int, opponent_score: int) -> int:
     """Return the points scored by rolling 0 dice according to Boar Brawl.
 
     player_score:     The total score of the current player.
@@ -53,7 +54,8 @@ def boar_brawl(player_score, opponent_score):
     # END PROBLEM 2
 
 
-def take_turn(num_rolls, player_score, opponent_score, dice=six_sided):
+def take_turn(num_rolls: int, player_score: int, 
+              opponent_score: int, dice: Callable[[], int]=six_sided) -> int:
     """Return the points scored on a turn rolling NUM_ROLLS dice when the
     player has PLAYER_SCORE points and the opponent has OPPONENT_SCORE points.
 
@@ -74,7 +76,8 @@ def take_turn(num_rolls, player_score, opponent_score, dice=six_sided):
     # END PROBLEM 3
 
 
-def simple_update(num_rolls, player_score, opponent_score, dice=six_sided):
+def simple_update(num_rolls: int, player_score: int, 
+                  opponent_score: int, dice: Callable[[], int]=six_sided) -> int:
     """Return the total score of a player who starts their turn with
     PLAYER_SCORE and then rolls NUM_ROLLS DICE, ignoring Fuzzy Factors.
     """
@@ -82,7 +85,7 @@ def simple_update(num_rolls, player_score, opponent_score, dice=six_sided):
     return score
 
 
-def hog_gcd(x, y):
+def hog_gcd(x: int, y: int) -> int:
     """Return the greatest common divisor between X and Y"""
     # BEGIN PROBLEM 4
     "*** YOUR CODE HERE ***"
@@ -92,7 +95,7 @@ def hog_gcd(x, y):
     # END PROBLEM 4
 
 
-def fuzzy_points(score):
+def fuzzy_points(score: int) -> int:
     """Return the new score of a player taking into account the Fuzzy Factors rule.
     """
     # BEGIN PROBLEM 4
@@ -107,7 +110,8 @@ def fuzzy_points(score):
     # END PROBLEM 4
 
 
-def fuzzy_update(num_rolls, player_score, opponent_score, dice=six_sided):
+def fuzzy_update(num_rolls: int, player_score: int, 
+                 opponent_score:int, dice: Callable[[], int]=six_sided) -> int:
     """Return the total score of a player who starts their turn with
     PLAYER_SCORE and then rolls NUM_ROLLS DICE, *including* Fuzzy Factors.
     """
@@ -125,8 +129,9 @@ def always_roll_5(score, opponent_score):
     return 5
 
 
-def play(strategy0, strategy1, update,
-         score0=0, score1=0, dice=six_sided, goal=GOAL):
+def play(strategy0: Callable[[int, int], int], strategy1: Callable[[int, int], int]
+         , update: Callable[[int, int, int, Callable], int], score0: int=0, 
+         score1: int=0, dice: Callable[[], int]=six_sided, goal: int=GOAL) -> Tuple[int, int]:
     """Simulate a game and return the final scores of both players, with
     Player 0's score first and Player 1's score second.
 
@@ -154,6 +159,13 @@ def play(strategy0, strategy1, update,
     who = 0  # Who is about to take a turn, 0 (first) or 1 (second)
     # BEGIN PROBLEM 5
     "*** YOUR CODE HERE ***"
+    strategies = [strategy0, strategy1]
+    scores = [score0, score1]
+    while scores[0] < goal and scores[1] < goal:
+        num_rolls = strategies[who](scores[who], scores[1 - who])
+        scores[who] = update(num_rolls, scores[who], scores[1 - who], dice)
+        who = 1 - who
+    score0, score1 = scores
     # END PROBLEM 5
     return score0, score1
 
@@ -163,7 +175,7 @@ def play(strategy0, strategy1, update,
 #######################
 
 
-def always_roll(n):
+def always_roll(n: int) -> Callable[[int, int], int]:
     """Return a player strategy that always rolls N dice.
 
     A player strategy is a function that takes two total scores as arguments
@@ -179,6 +191,7 @@ def always_roll(n):
     assert n >= 0 and n <= 10
     # BEGIN PROBLEM 6
     "*** YOUR CODE HERE ***"
+    return lambda score, opponent_score: n
     # END PROBLEM 6
 
 
@@ -197,7 +210,7 @@ def catch_up(score, opponent_score):
         return 5
 
 
-def is_always_roll(strategy, goal=GOAL):
+def is_always_roll(strategy: Callable[[int, int], int], goal: int=GOAL) -> bool:
     """Return whether STRATEGY always chooses the same number of dice to roll
     given a game that goes to GOAL points.
 
@@ -210,10 +223,17 @@ def is_always_roll(strategy, goal=GOAL):
     """
     # BEGIN PROBLEM 7
     "*** YOUR CODE HERE ***"
+    num_rolls = strategy(0, 0)
+    for i in range(goal):
+        for j in range(goal):
+            if strategy(i, j) != num_rolls:
+                return False
+    return True
     # END PROBLEM 7
 
 
-def make_averaged(original_function, total_samples=1000):
+def make_averaged(original_function: Callable[..., int], 
+                  total_samples: int=1000) -> Callable[..., float]:
     """Return a function that returns the average value of ORIGINAL_FUNCTION
     called TOTAL_SAMPLES times.
 
@@ -226,10 +246,17 @@ def make_averaged(original_function, total_samples=1000):
     """
     # BEGIN PROBLEM 8
     "*** YOUR CODE HERE ***"
+    def average_function(*args):
+        total = 0
+        for i in range(total_samples):
+            total += original_function(*args)
+        return total / total_samples
+    return average_function
     # END PROBLEM 8
 
 
-def max_scoring_num_rolls(dice=six_sided, total_samples=1000):
+def max_scoring_num_rolls(dice: Callable[[], int]=six_sided, 
+                          total_samples: int=1000) -> int:
     """Return the number of dice (1 to 10) that gives the highest average turn score
     by calling roll_dice with the provided DICE a total of TOTAL_SAMPLES times.
     Assume that the dice always return positive outcomes.
@@ -240,6 +267,16 @@ def max_scoring_num_rolls(dice=six_sided, total_samples=1000):
     """
     # BEGIN PROBLEM 9
     "*** YOUR CODE HERE ***"
+    MIN_ROLLS = 1
+    MAX_ROLLS = 10
+
+    max_score_rolls = 1
+    max_score = 1
+    for num_rolls in range(MIN_ROLLS, MAX_ROLLS + 1):
+        score = make_averaged(roll_dice, total_samples)(num_rolls, dice)
+        if score > max_score:
+            max_score_rolls, max_score = num_rolls, score
+    return max_score_rolls
     # END PROBLEM 9
 
 
@@ -278,11 +315,13 @@ def run_experiments():
     "*** You may add additional experiments as you wish ***"
 
 
-def boar_strategy(score, opponent_score, threshold=12, num_rolls=6):
+def boar_strategy(score: int, opponent_score: int, threshold: int=12, num_rolls: int=6):
     """This strategy returns 0 dice if Boar Brawl gives at least THRESHOLD
     points, and returns NUM_ROLLS otherwise. Ignore score and Fuzzy Factors.
     """
     # BEGIN PROBLEM 10
+    if boar_brawl(score, opponent_score) >= threshold:
+        return 0
     return num_rolls  # Remove this line once implemented.
     # END PROBLEM 10
 
@@ -290,6 +329,9 @@ def boar_strategy(score, opponent_score, threshold=12, num_rolls=6):
 def fuzzy_strategy(score, opponent_score, threshold=12, num_rolls=6):
     """This strategy returns 0 dice when your score would increase by at least threshold."""
     # BEGIN PROBLEM 11
+    NO_ROLL = 0
+    if fuzzy_update(NO_ROLL, score, opponent_score) - score >= threshold:
+        return NO_ROLL
     return num_rolls  # Remove this line once implemented.
     # END PROBLEM 11
 
