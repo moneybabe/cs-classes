@@ -197,6 +197,17 @@ def waves(n):
     def helper(n, count, prev):
         curr, next, rest = n % 10, (n // 10) % 10, n // 10
         "*** YOUR CODE HERE ***"
+        if rest == 0:
+            if count == 0:
+                return True
+            return False
+        elif prev < curr and next < curr:
+            count += 1
+        elif prev > curr and next > curr:
+            count -= 1
+        elif curr == next:
+            curr = prev
+        return helper(rest, count, curr)
     return helper(n // 10, 0, n % 10)
 
 
@@ -254,3 +265,13 @@ def count_coins(total):
     True
     """
     "*** YOUR CODE HERE ***"
+    def counting(amount, coin):
+        if amount == 0:
+            return 1
+        elif amount < 0:
+            return 0
+        elif coin == 1:
+            return 1
+        return counting(amount - coin, coin) + counting(amount, next_smaller_coin(coin))
+    return counting(total, 25)
+            
