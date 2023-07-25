@@ -34,9 +34,11 @@ class Mint:
 
     def create(self, coin):
         "*** YOUR CODE HERE ***"
+        return coin(self.year)
 
     def update(self):
         "*** YOUR CODE HERE ***"
+        self.year = Mint.present_year
 
 
 class Coin:
@@ -47,6 +49,7 @@ class Coin:
 
     def worth(self):
         "*** YOUR CODE HERE ***"
+        return self.cents + max(0, Mint.present_year - self.year - 50)
 
 
 class Nickel(Coin):
@@ -120,6 +123,10 @@ def add_d_leaves(t, v):
         10
     """
     "*** YOUR CODE HERE ***"
+    def depth_track_add(t, v, depth):
+        [depth_track_add(b, v, depth + 1) for b in t.branches]
+        t.branches += [Tree(v) for _ in range(depth)]
+    return depth_track_add(t, v, 0)
 
 
 def store_digits(n):
@@ -140,6 +147,9 @@ def store_digits(n):
     >>> print("Do not use str or reversed!") if any([r in cleaned for r in ["str", "reversed"]]) else None
     """
     "*** YOUR CODE HERE ***"
+    def tail_store_digits(n, tail):
+        return tail if n == 0 else tail_store_digits(n // 10, Link(n % 10, tail))
+    return tail_store_digits(n, Link.empty)
 
 
 def deep_map_mut(func, lnk):
@@ -162,6 +172,15 @@ def deep_map_mut(func, lnk):
     <9 <16> 25 36>
     """
     "*** YOUR CODE HERE ***"
+    if lnk is Link.empty:
+        return
+    if isinstance(lnk.first, Link):
+        deep_map_mut(func, lnk.first)
+        return deep_map_mut(func, lnk.rest)
+    else:
+        lnk.first = func(lnk.first)
+        return deep_map_mut(func, lnk.rest)
+
 
 
 def two_list(vals, counts):
@@ -183,6 +202,12 @@ def two_list(vals, counts):
     Link(1, Link(1, Link(3, Link(3, Link(2)))))
     """
     "*** YOUR CODE HERE ***"
+    start = curr = Link(None)
+    for val, count in zip(vals, counts):
+        for _ in range(count):
+            curr.rest = Link(val)
+            curr = curr.rest
+    return start.rest
 
 
 class Tree:
