@@ -35,7 +35,7 @@ def scheme_eval(expr, env, _=None):  # Optional third argument is ignored
     else:
         # BEGIN PROBLEM 3
         "*** YOUR CODE HERE ***"
-        return complete_apply(
+        return scheme_apply(
                                 scheme_eval(first, env), 
                                 rest.map(lambda expr: scheme_eval(expr, env)), 
                                 env
@@ -124,7 +124,7 @@ def complete_apply(procedure, args, env):
     validate_procedure(procedure)
     val = scheme_apply(procedure, args, env)
     if isinstance(val, Unevaluated):
-        return scheme_eval(val.expr, val.env, True)
+        return scheme_eval(val.expr, val.env)
     else:
         return val
 
