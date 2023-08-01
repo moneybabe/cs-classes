@@ -35,6 +35,11 @@ def scheme_eval(expr, env, _=None):  # Optional third argument is ignored
     else:
         # BEGIN PROBLEM 3
         "*** YOUR CODE HERE ***"
+        return scheme_apply(
+                                scheme_eval(first, env), 
+                                rest.map(lambda expr: scheme_eval(expr, env)), 
+                                env
+                            )
         # END PROBLEM 3
 
 
@@ -47,21 +52,30 @@ def scheme_apply(procedure, args, env):
     if isinstance(procedure, BuiltinProcedure):
         # BEGIN PROBLEM 2
         "*** YOUR CODE HERE ***"
-        func = procedure.py_func
+        operands = []
+        while args != nil:
+            operands.append(args.first)
+            args = args.rest
         # END PROBLEM 2
         try:
             # BEGIN PROBLEM 2
             "*** YOUR CODE HERE ***"
+            if procedure.need_env:
+                operands.append(env)
+            return procedure.py_func(*operands)
             # END PROBLEM 2
         except TypeError as err:
             raise SchemeError('incorrect number of arguments: {0}'.format(procedure))
     elif isinstance(procedure, LambdaProcedure):
         # BEGIN PROBLEM 9
         "*** YOUR CODE HERE ***"
+        define_env = procedure.env.make_child_frame(procedure.formals, args)
+        return eval_all(procedure.body, define_env)
         # END PROBLEM 9
     elif isinstance(procedure, MuProcedure):
         # BEGIN PROBLEM 11
         "*** YOUR CODE HERE ***"
+        return eval_all(procedure.body, env.make_child_frame(procedure.formals, args))
         # END PROBLEM 11
     else:
         assert False, "Unexpected procedure: {}".format(procedure)
@@ -83,7 +97,12 @@ def eval_all(expressions, env):
     2
     """
     # BEGIN PROBLEM 6
-    return scheme_eval(expressions.first, env)  # replace this with lines of your own code
+    if expressions is nil:
+        return None
+    while expressions.rest is not nil:
+        scheme_eval(expressions.first, env)
+        expressions = expressions.rest
+    return scheme_eval(expressions.first, env)
     # END PROBLEM 6
 
 
