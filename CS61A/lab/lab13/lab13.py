@@ -225,10 +225,16 @@ class Player:
         self.popularity = 100
 
     def debate(self, other):
-        "*** YOUR CODE HERE ***"
+        if random() < max(0.1, self.popularity / (other.popularity + self.popularity)):
+            self.popularity += 50
+        else:
+            self.popularity = max(0, self.popularity - 50)
+            
 
     def speech(self, other):
-        "*** YOUR CODE HERE ***"
+        self.votes += self.popularity // 10
+        self.popularity += self.popularity // 10
+        other.popularity = max(0, other.popularity - other.popularity // 10)
 
     def choose(self, other):
         return self.speech
@@ -259,14 +265,18 @@ class Game:
 
     def play(self):
         while not self.game_over():
-            "*** YOUR CODE HERE ***"
+            if self.turn % 2:
+                self.p2.choose(self.p1)(self.p1)
+            else:
+                self.p1.choose(self.p2)(self.p2)
+            self.turn += 1
         return self.winner()
 
     def game_over(self):
         return max(self.p1.votes, self.p2.votes) >= 50 or self.turn >= 10
 
     def winner(self):
-        "*** YOUR CODE HERE ***"
+        return None if self.p1.votes == self.p2.votes else max(self.p1, self.p2, key=lambda x: x.votes)
 
 
 # Phase 3: New Players
@@ -290,7 +300,7 @@ class AggressivePlayer(Player):
     """
 
     def choose(self, other):
-        "*** YOUR CODE HERE ***"
+        return self.debate if self.popularity <= other.popularity else self.speech
 
 
 class CautiousPlayer(Player):
@@ -309,7 +319,7 @@ class CautiousPlayer(Player):
     """
 
     def choose(self, other):
-        "*** YOUR CODE HERE ***"
+        return self.debate if self.popularity == 0 else self.speech
 
 
 def deck(suits, ranks):
@@ -327,7 +337,7 @@ def deck(suits, ranks):
     []
     """
     "*** YOUR CODE HERE ***"
-    return ______
+    return [[suit, rank] for suit in suits for rank in ranks]
 
 
 def intersection(lst_of_lsts):
@@ -348,7 +358,9 @@ def intersection(lst_of_lsts):
     [3]
     """
     elements = []
-    "*** YOUR CODE HERE ***"
+    for element in lst_of_lsts[0]:
+        if all([element in lst for lst in lst_of_lsts]) and element not in elements:
+            elements.append(element)
     return elements
 
 
@@ -370,7 +382,7 @@ def party_planner(text):
     >>> party_planner("514-300-2002, 310-265-4242") # invite your friends in LA and Montreal
     True
     """
-    return bool(re.search(__________, text))
+    return bool(re.search(r"(\((51[04]|31[04])\)|(51[04]|31[04]))-\d{3}-\d{4}", text))
 
 
 class Tree:
