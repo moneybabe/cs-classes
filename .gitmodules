@@ -1,6 +1,0 @@
-[submodule "CSE15L/lr4/list-examples-grader"]
-	path = CSE15L/lr4/list-examples-grader
-	url = git@github.com:leftPathGoat/list-examples-grader.git
-[submodule "CS47B"]
-	path = CS47B
-	url = git@github.com:Berkeley-CS61B-Student/fa23-s441.git
